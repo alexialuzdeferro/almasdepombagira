@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Almas de Pombagira</title>
+  <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" />
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:wght@600&display=swap');
+
+    html, body {
+      margin: 0;
+      height: 100%;
+      overflow-y: auto;
+      color: #fff;
+      font-family: 'Crimson Text', serif;
+      text-align: center;
+      background-color: #000;
+    }
+
+    #vanta-bg {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      top: 0;
+      left: 0;
+    }
+
+    header {
+      margin-top: 20px;
+    }
+
+    header img {
+      width: 80%;
+      max-width: 600px;
+      border-radius: 12px;
+      box-shadow: 0 0 25px rgba(255, 0, 50, 0.6);
+    }
+
+    h1 {
+      font-family: 'Cinzel Decorative', cursive;
+      font-size: 2.5em;
+      margin-top: 10px;
+      color: #ff0033;
+      text-shadow: 0 0 15px #ff0033;
+    }
+
+    .social-icons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .social-icons a {
+      color: #ff0033;
+      background-color: rgba(0,0,0,0.6);
+      border: 1px solid #ff0033;
+      border-radius: 50%;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+
+    .social-icons a:hover {
+      background-color: #ff0033;
+      color: #000;
+      transform: scale(1.1);
+      box-shadow: 0 0 15px #ff0033;
+    }
+
+    .quiz-container {
+      max-width: 600px;
+      margin: 50px auto;
+      background-color: rgba(0, 0, 0, 0.6);
+      border: 2px solid #ff0033;
+      border-radius: 15px;
+      padding: 25px;
+      box-shadow: 0 0 20px rgba(255,0,50,0.5);
+    }
+
+    .quiz-question {
+      font-size: 1.3em;
+      margin-bottom: 20px;
+      color: #ff99aa;
+      text-shadow: 0 0 10px #ff0033;
+    }
+
+    .quiz-option {
+      display: block;
+      background-color: rgba(30, 0, 0, 0.8);
+      border: 1px solid #ff0033;
+      color: #fff;
+      padding: 12px;
+      border-radius: 10px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .quiz-option:hover {
+      background-color: #ff0033;
+      color: #000;
+      transform: scale(1.05);
+      box-shadow: 0 0 15px #ff0033;
+    }
+
+    .result {
+      font-size: 1.5em;
+      margin-top: 25px;
+      color: #ff0033;
+      text-shadow: 0 0 15px #ff0033;
+    }
+
+    @media (max-width: 600px) {
+      .quiz-container {
+        width: 90%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="vanta-bg"></div>
+
+  <header>
+    <img src="A_digital_graphic_design_features_the_Portuguese_p.png" alt="Almas de Pombagira Banner">
+    <h1>Almas de Pombagira</h1>
+
+    <div class="social-icons">
+      <a href="https://www.tiktok.com/@espelhosdepombagira?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.tiktok.com/@alexiarosadefogo?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+      <a href="https://www.youtube.com/@almasdepombagira" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.instagram.com/almasdepombagira" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.threads.com/@almasdepombagira" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
+      <a href="https://br.pinterest.com/almasdepombagira" target="_blank" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+      <a href="https://www.kwai.com/@AlmasdePombagira" target="_blank" title="Kwai"><strong>K</strong></a>
+      <a href="https://www.kwai.com/@AlexiaRosadeFogo" target="_blank" title="Kwai"><strong>K</strong></a>
+    </div>
+  </header>
+
+  <div class="quiz-container" id="quiz">
+    <div class="quiz-question" id="question"></div>
+    <div id="options"></div>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script src="https://kit.fontawesome.com/a2d9d6a64d.js" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js"></script>
+
+  <script>
+    VANTA.WAVES({
+      el: "#vanta-bg",
+      mouseControls: true,
+      touchControls: true,
+      minHeight: 200.00,
+      minWidth: 200.00,
+      scale: 1.00,
+      scaleMobile: 1.00,
+      color: 0xff0033,
+      shininess: 50.00,
+      waveHeight: 20.00,
+      waveSpeed: 0.8,
+      zoom: 1.15
+    });
+
+    const quizData = [
+      {
+        question: "Qual chama arde mais forte em sua alma?",
+        options: ["Amor e desejo", "Mistério e silêncio", "Poder e vingança", "Liberdade e sedução"],
+        result: ["Maria Padilha", "Rosa Caveira", "Maria Mulambo", "Dama da Noite"]
+      },
+      {
+        question: "Quando o mundo te fere, o que nasce em ti?",
+        options: ["Um riso de quem sabe", "Um grito que liberta", "Um olhar que amaldiçoa", "Um perfume que domina"],
+        result: ["Maria Mulambo", "Dama da Noite", "Rosa Caveira", "Maria Padilha"]
+      },
+      {
+        question: "Qual é o espelho da tua alma?",
+        options: ["Vinho e sangue", "Lágrimas e fogo", "Terra e rosas", "Sombras e gargalhadas"],
+        result: ["Maria Padilha", "Maria Mulambo", "Dama da Noite", "Rosa Caveira"]
+      }
+    ];
+
+    let currentQuestion = 0;
+    const questionEl = document.getElementById("question");
+    const optionsEl = document.getElementById("options");
+    const resultEl = document.getElementById("result");
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
+      questionEl.textContent = q.question;
+      optionsEl.innerHTML = "";
+      q.options.forEach((opt, index) => {
+        const btn = document.createElement("div");
+        btn.classList.add("quiz-option");
+        btn.textContent = opt;
+        btn.onclick = () => selectOption(index);
+        optionsEl.appendChild(btn);
+      });
+    }
+
+    function selectOption(index) {
+      const entity = quizData[currentQuestion].result[index];
+      resultEl.textContent = `A energia que vibra em você é de ${entity}.`;
+      currentQuestion++;
+      if (currentQuestion < quizData.length) {
+        setTimeout(loadQuestion, 2000);
+        resultEl.textContent += " 🌹";
+      } else {
+        resultEl.textContent = `✨ Sua alma é guiada por ${entity}. Laroyê Pombagira! 🌹`;
+      }
+    }
+
+    loadQuestion();
+  </script>
+</body>
+</html>
