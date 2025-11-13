@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Almas de Pombagira - Saiba agora quem e sua moça!</title>
+  <title>Almas de Pombagira</title>
   <link rel="icon" href="https://cdn-icons-png.flaticon.com/512/3917/3917132.png" />
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Crimson+Text:wght@600&display=swap');
@@ -11,21 +11,19 @@
     html, body {
       margin: 0;
       height: 100%;
-      overflow-y: auto;
+      overflow: hidden;
       color: #fff;
       font-family: 'Crimson Text', serif;
       text-align: center;
-      background-color: #000;
+      background: linear-gradient(45deg, #000000, #1a0000, #330000, #000000);
+      background-size: 400% 400%;
+      animation: gradientShift 8s ease infinite;
     }
 
-    /* Fundo VANTA 3D */
-    #vanta-bg {
-      position: fixed;
-      width: 100%;
-      height: 100%;
-      z-index: -1;
-      top: 0;
-      left: 0;
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
 
     h1 {
@@ -35,14 +33,21 @@
       color: #ff0033;
       text-shadow: 0 0 15px #ff0033;
       animation: glow 3s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 10;
     }
 
     @keyframes glow {
-      from { text-shadow: 0 0 10px #ff0033; }
-      to { text-shadow: 0 0 25px #ff3366; }
+      from { 
+        text-shadow: 0 0 10px #ff0033, 0 0 20px #ff0033, 0 0 30px #ff0033;
+        color: #ff0033;
+      }
+      to { 
+        text-shadow: 0 0 20px #ff3366, 0 0 30px #ff3366, 0 0 40px #ff3366;
+        color: #ff3366;
+      }
     }
 
-    /* Links das redes sociais */
     .social-links {
       margin-top: 10px;
       display: flex;
@@ -50,6 +55,8 @@
       flex-wrap: wrap;
       gap: 15px;
       font-size: 1.1em;
+      position: relative;
+      z-index: 10;
     }
 
     .social-links a {
@@ -57,24 +64,51 @@
       text-decoration: none;
       border-bottom: 1px solid transparent;
       transition: all 0.3s ease;
+      padding: 5px 10px;
+      border-radius: 5px;
+      position: relative;
+      overflow: hidden;
     }
 
     .social-links a:hover {
       color: #ff0033;
       border-bottom: 1px solid #ff0033;
       text-shadow: 0 0 10px #ff0033;
+      background: linear-gradient(45deg, rgba(255,0,51,0.2), rgba(255,51,102,0.3));
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(255,0,51,0.4);
     }
 
-    /* Container do Quiz */
     .quiz-container {
       max-width: 600px;
       margin: 60px auto;
-      background-color: rgba(0, 0, 0, 0.6);
+      background: linear-gradient(135deg, rgba(0,0,0,0.8), rgba(30,0,0,0.7));
       border: 2px solid #ff0033;
       border-radius: 15px;
       padding: 25px;
       box-shadow: 0 0 25px rgba(255,0,50,0.5);
-      backdrop-filter: blur(5px);
+      backdrop-filter: blur(10px);
+      position: relative;
+      overflow: hidden;
+      min-height: 300px;
+    }
+
+    .quiz-container::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ff0033, #ff3366, #ff0033);
+      z-index: -1;
+      border-radius: 15px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .quiz-container:hover::before {
+      opacity: 0.3;
     }
 
     .quiz-question {
@@ -82,25 +116,67 @@
       margin-bottom: 20px;
       color: #ff99aa;
       text-shadow: 0 0 10px #ff0033;
+      animation: pulse 2s ease-in-out infinite;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes pulse {
+      0%, 100% { text-shadow: 0 0 10px #ff0033; }
+      50% { text-shadow: 0 0 20px #ff0033, 0 0 30px #ff0033; }
     }
 
     .quiz-option {
       display: block;
-      background-color: rgba(30, 0, 0, 0.8);
+      background: linear-gradient(135deg, rgba(30,0,0,0.8), rgba(60,0,0,0.6));
       border: 1px solid #ff0033;
       color: #fff;
       padding: 12px;
       border-radius: 10px;
       margin: 10px 0;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      position: relative;
+      overflow: hidden;
+      z-index: 2;
+    }
+
+    .quiz-option::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,0,51,0.3), transparent);
+      transition: left 0.6s;
+    }
+
+    .quiz-option:hover::before {
+      left: 100%;
     }
 
     .quiz-option:hover {
-      background-color: #ff0033;
+      background: linear-gradient(135deg, #ff0033, #ff3366);
       color: #000;
-      transform: scale(1.05);
-      box-shadow: 0 0 15px #ff0033;
+      transform: scale(1.08) translateY(-3px);
+      box-shadow: 0 10px 25px rgba(255,0,51,0.6);
+      border-color: #ff3366;
+      font-weight: bold;
+    }
+
+    .quiz-option:hover::after {
+      content: '🔥';
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      animation: flame 0.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes flame {
+      from { transform: translateY(-50%) scale(1); }
+      to { transform: translateY(-50%) scale(1.2); }
     }
 
     .result {
@@ -109,6 +185,87 @@
       color: #ff0033;
       text-shadow: 0 0 15px #ff0033;
       transition: opacity 1s ease;
+      animation: resultGlow 2s ease-in-out infinite alternate;
+      position: relative;
+      z-index: 2;
+    }
+
+    @keyframes resultGlow {
+      from { 
+        text-shadow: 0 0 15px #ff0033;
+        transform: scale(1);
+      }
+      to { 
+        text-shadow: 0 0 25px #ff0033, 0 0 35px #ff3366;
+        transform: scale(1.02);
+      }
+    }
+
+    /* Transição de página */
+    .page-transition {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #ff0033, #000000);
+      z-index: 9999;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .page-transition.active {
+      opacity: 1;
+    }
+
+    /* Fundo dinâmico que reage ao mouse */
+    .dynamic-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%, rgba(255,0,51,0.1), transparent);
+      pointer-events: none;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .dynamic-bg.active {
+      opacity: 1;
+    }
+
+    /* Container de perguntas com transição - CORRIGIDO */
+    .question-container {
+      position: relative;
+      width: 100%;
+      height: auto;
+      transition: all 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    .question-container.exit-left {
+      transform: translateX(-100%);
+      opacity: 0;
+    }
+
+    .question-container.enter-right {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+
+    .question-container.enter-right.active {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    /* Garantir que perguntas e opções sejam visíveis */
+    #question, #options {
+      position: relative;
+      z-index: 2;
     }
 
     @media (max-width: 600px) {
@@ -116,12 +273,24 @@
         width: 90%;
         margin-top: 40px;
       }
+      
+      h1 {
+        font-size: 2em;
+      }
+      
+      .social-links {
+        font-size: 0.9em;
+        gap: 10px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- Fundo 3D -->
-  <div id="vanta-bg"></div>
+  <!-- Fundo dinâmico que reage ao mouse -->
+  <div class="dynamic-bg" id="dynamicBg"></div>
+  
+  <!-- Transição de página -->
+  <div class="page-transition" id="pageTransition"></div>
 
   <h1>Almas de Pombagira</h1>
 
@@ -134,32 +303,51 @@
   </div>
 
   <div class="quiz-container" id="quiz">
-    <div class="quiz-question" id="question"></div>
-    <div id="options"></div>
+    <div class="question-container" id="questionContainer">
+      <div class="quiz-question" id="question"></div>
+      <div id="options"></div>
+    </div>
     <div class="result" id="result"></div>
   </div>
 
-  <!-- Scripts do fundo -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.net.min.js"></script>
+  <!-- Áudio para efeitos sonoros -->
+  <audio id="hoverSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmFgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+  </audio>
+  
+  <audio id="clickSound" preload="auto">
+    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYIG2m98OScTgwOUarm7blmFgU7k9n1unEiBC13yO/eizEIHWq+8+OWT" type="audio/wav">
+  </audio>
 
   <script>
-    // Fundo interativo VANTA 3D vermelho e preto
-    VANTA.NET({
-      el: "#vanta-bg",
-      mouseControls: true,
-      touchControls: true,
-      gyroControls: false,
-      minHeight: 200.00,
-      minWidth: 200.00,
-      scale: 1.00,
-      scaleMobile: 1.00,
-      color: 0xff0033,
-      backgroundColor: 0x000000,
-      points: 12.00,
-      maxDistance: 25.00,
-      spacing: 18.00
+    // Fundo dinâmico que reage ao movimento do mouse
+    document.addEventListener('mousemove', (e) => {
+      const dynamicBg = document.getElementById('dynamicBg');
+      const x = (e.clientX / window.innerWidth) * 100;
+      const y = (e.clientY / window.innerHeight) * 100;
+      
+      dynamicBg.style.background = `radial-gradient(circle at ${x}% ${y}%, rgba(255,0,51,0.3), rgba(255,51,102,0.2), transparent)`;
+      dynamicBg.classList.add('active');
+      
+      setTimeout(() => {
+        dynamicBg.classList.remove('active');
+      }, 1000);
     });
+
+    // Funções de áudio
+    function playHoverSound() {
+      const sound = document.getElementById('hoverSound');
+      sound.volume = 0.3;
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    }
+
+    function playClickSound() {
+      const sound = document.getElementById('clickSound');
+      sound.volume = 0.5;
+      sound.currentTime = 0;
+      sound.play().catch(() => {});
+    }
 
     // Quiz espiritual
     const quizData = [
@@ -184,38 +372,95 @@
     const questionEl = document.getElementById("question");
     const optionsEl = document.getElementById("options");
     const resultEl = document.getElementById("result");
+    const questionContainer = document.getElementById("questionContainer");
+    const pageTransition = document.getElementById("pageTransition");
 
     function loadQuestion() {
       const q = quizData[currentQuestion];
       questionEl.textContent = q.question;
       optionsEl.innerHTML = "";
       resultEl.style.opacity = 0;
+      
       q.options.forEach((opt, index) => {
         const btn = document.createElement("div");
         btn.classList.add("quiz-option");
         btn.textContent = opt;
-        btn.onclick = () => selectOption(index);
+        
+        // Adicionar efeitos sonoros
+        btn.addEventListener('mouseenter', playHoverSound);
+        btn.addEventListener('click', () => {
+          playClickSound();
+          selectOption(index);
+        });
+        
         optionsEl.appendChild(btn);
       });
+      
+      // Animação de entrada - CORRIGIDA
+      questionContainer.classList.remove('exit-left', 'enter-right');
+      questionContainer.style.transform = 'translateX(0)';
+      questionContainer.style.opacity = '1';
     }
 
     function selectOption(index) {
       const entity = quizData[currentQuestion].result[index];
-      resultEl.style.opacity = 1;
-      resultEl.textContent = `A energia que vibra em você é de ${entity}.`;
-      currentQuestion++;
-      if (currentQuestion < quizData.length) {
-        setTimeout(() => {
-          resultEl.style.opacity = 0;
-          loadQuestion();
-        }, 2000);
-      } else {
-        setTimeout(() => {
-          resultEl.textContent = `✨ Sua alma é guiada por ${entity}. Laroyê Pombagira! 🌹`;
-        }, 1000);
-      }
+      
+      // Efeito de transição de página
+      pageTransition.classList.add('active');
+      
+      setTimeout(() => {
+        resultEl.style.opacity = 1;
+        resultEl.textContent = `A energia que vibra em você é de ${entity}.`;
+        
+        currentQuestion++;
+        
+        if (currentQuestion < quizData.length) {
+          // Transição para próxima pergunta - CORRIGIDA
+          questionContainer.style.transform = 'translateX(-100%)';
+          questionContainer.style.opacity = '0';
+          
+          setTimeout(() => {
+            resultEl.style.opacity = 0;
+            questionContainer.style.transform = 'translateX(100%)';
+            
+            setTimeout(() => {
+              questionContainer.style.transform = 'translateX(0)';
+              questionContainer.style.opacity = '1';
+              loadQuestion();
+              pageTransition.classList.remove('active');
+            }, 100);
+          }, 300);
+        } else {
+          // Final do quiz
+          setTimeout(() => {
+            resultEl.textContent = `✨ Sua alma é guiada por ${entity}. Laroyê Pombagira! 🌹`;
+            pageTransition.classList.remove('active');
+            
+            // Efeito especial no final
+            document.body.style.background = 'linear-gradient(45deg, #000000, #1a0000, #330000, #ff0033, #000000)';
+            document.body.style.backgroundSize = '400% 400%';
+            document.body.style.animation = 'gradientShift 3s ease infinite';
+          }, 1000);
+        }
+      }, 300);
     }
 
+    // Adicionar efeitos sonoros aos links sociais
+    document.querySelectorAll('.social-links a').forEach(link => {
+      link.addEventListener('mouseenter', playHoverSound);
+      link.addEventListener('click', playClickSound);
+    });
+
+    // Efeito de rotação do fundo baseado no movimento do mouse
+    let mouseX = 0, mouseY = 0;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = (e.clientX / window.innerWidth - 0.5) * 20;
+      mouseY = (e.clientY / window.innerHeight - 0.5) * 20;
+      
+      document.body.style.transform = `perspective(1000px) rotateY(${mouseX}deg) rotateX(${-mouseY}deg)`;
+    });
+
+    // Iniciar o quiz
     loadQuestion();
   </script>
 </body>
