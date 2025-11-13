@@ -27,53 +27,34 @@
       left: 0;
     }
 
-    header {
-      margin-top: 20px;
-    }
-
-    header img {
-      width: 80%;
-      max-width: 600px;
-      border-radius: 12px;
-      box-shadow: 0 0 25px rgba(255, 0, 50, 0.6);
-    }
-
     h1 {
       font-family: 'Cinzel Decorative', cursive;
       font-size: 2.5em;
-      margin-top: 10px;
+      margin-top: 30px;
       color: #ff0033;
       text-shadow: 0 0 15px #ff0033;
     }
 
-    .social-icons {
+    .social-links {
+      margin-top: 10px;
       display: flex;
       justify-content: center;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 20px;
+      font-size: 1.1em;
     }
 
-    .social-icons a {
-      color: #ff0033;
-      background-color: rgba(0,0,0,0.6);
-      border: 1px solid #ff0033;
-      border-radius: 50%;
-      width: 45px;
-      height: 45px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 22px;
+    .social-links a {
+      color: #ff99aa;
       text-decoration: none;
+      border-bottom: 1px solid transparent;
       transition: all 0.3s ease;
     }
 
-    .social-icons a:hover {
-      background-color: #ff0033;
-      color: #000;
-      transform: scale(1.1);
-      box-shadow: 0 0 15px #ff0033;
+    .social-links a:hover {
+      color: #ff0033;
+      border-bottom: 1px solid #ff0033;
+      text-shadow: 0 0 10px #ff0033;
     }
 
     .quiz-container {
@@ -117,6 +98,7 @@
       margin-top: 25px;
       color: #ff0033;
       text-shadow: 0 0 15px #ff0033;
+      transition: opacity 1s ease;
     }
 
     @media (max-width: 600px) {
@@ -129,22 +111,15 @@
 <body>
   <div id="vanta-bg"></div>
 
-  <header>
-    <img src="A_digital_graphic_design_features_the_Portuguese_p.png" alt="Almas de Pombagira Banner">
-    <h1>Almas de Pombagira</h1>
+  <h1>Almas de Pombagira</h1>
 
-    <div class="social-icons">
-      <a href="https://www.tiktok.com/@espelhosdepombagira?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.tiktok.com/@alexiarosadefogo?lang=pt-BR" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
-      <a href="https://www.youtube.com/@almasdepombagira" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.instagram.com/almasdepombagira" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.threads.com/@almasdepombagira" target="_blank" title="Threads"><i class="fab fa-threads"></i></a>
-      <a href="https://br.pinterest.com/almasdepombagira" target="_blank" title="Pinterest"><i class="fab fa-pinterest"></i></a>
-      <a href="https://www.kwai.com/@AlmasdePombagira" target="_blank" title="Kwai"><strong>K</strong></a>
-      <a href="https://www.kwai.com/@AlexiaRosadeFogo" target="_blank" title="Kwai"><strong>K</strong></a>
-    </div>
-  </header>
+  <div class="social-links">
+    🌹 <a href="https://www.tiktok.com/@almasdepombagira?lang=pt-BR" target="_blank">TikTok</a> |
+    📸 <a href="https://www.instagram.com/almasdepombagira" target="_blank">Instagram</a> |
+    🔮 <a href="https://www.youtube.com/@almasdepombagira" target="_blank">YouTube</a> |
+    🕯️ <a href="https://br.pinterest.com/almasdepombagira" target="_blank">Pinterest</a> |
+    🔥 <a href="https://www.kwai.com/@AlmasdePombagira" target="_blank">Kwai</a>
+  </div>
 
   <div class="quiz-container" id="quiz">
     <div class="quiz-question" id="question"></div>
@@ -152,11 +127,11 @@
     <div class="result" id="result"></div>
   </div>
 
-  <script src="https://kit.fontawesome.com/a2d9d6a64d.js" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r121/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vanta/dist/vanta.waves.min.js"></script>
 
   <script>
+    // Fundo VANTA místico vermelho
     VANTA.WAVES({
       el: "#vanta-bg",
       mouseControls: true,
@@ -172,6 +147,7 @@
       zoom: 1.15
     });
 
+    // Quiz
     const quizData = [
       {
         question: "Qual chama arde mais forte em sua alma?",
@@ -199,6 +175,7 @@
       const q = quizData[currentQuestion];
       questionEl.textContent = q.question;
       optionsEl.innerHTML = "";
+      resultEl.style.opacity = 0;
       q.options.forEach((opt, index) => {
         const btn = document.createElement("div");
         btn.classList.add("quiz-option");
@@ -210,13 +187,18 @@
 
     function selectOption(index) {
       const entity = quizData[currentQuestion].result[index];
+      resultEl.style.opacity = 1;
       resultEl.textContent = `A energia que vibra em você é de ${entity}.`;
       currentQuestion++;
       if (currentQuestion < quizData.length) {
-        setTimeout(loadQuestion, 2000);
-        resultEl.textContent += " 🌹";
+        setTimeout(() => {
+          resultEl.style.opacity = 0;
+          loadQuestion();
+        }, 2000);
       } else {
-        resultEl.textContent = `✨ Sua alma é guiada por ${entity}. Laroyê Pombagira! 🌹`;
+        setTimeout(() => {
+          resultEl.textContent = `✨ Sua alma é guiada por ${entity}. Laroyê Pombagira! 🌹`;
+        }, 1000);
       }
     }
 
